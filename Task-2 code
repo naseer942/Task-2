@@ -1,0 +1,50 @@
+ #import pandas library
+import pandas as pd
+
+#Extracting the data from csv file
+df=pd.read_csv("01.Data Cleaning and Preprocessing - Copy.csv")
+
+#Printing the data present in it 
+print(df)
+ #Describing the data 
+print(df.describe())
+#checking for null values
+print(df.isnull())
+ #printing count of null values in each column 
+print(df.isnull().sum())
+#Handling missing values
+df1=df.fillna(value=0)
+df1
+#Forward Fillna
+d2=df.interpolate(method='ffill')
+d2
+ #Backward fill
+d3=df.interpolate(method='bfill')
+d3
+ #print the column names 
+df.columns
+#Drop a observation col beacuase it is non-numeric
+d=df.drop(['Observation'],axis=1,inplace=True)
+ df.columns
+ from scipy import stats
+
+# Calculate Q1 (25th percentile) and Q3 (75th percentile)
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+
+# Calculate IQR
+IQR = Q3 - Q1
+
+# Detect outliers
+outliers = (df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR))
+
+# Display outliers
+print(outliers)
+print(outliers.sum().sum())
+d1=df.describe()
+d1
+[ #Including additional statistics
+d1.loc['range'] = df.max() - df.min()
+d1.loc['skewness'] = df.skew()
+d1.loc['kurtosis'] = df.kurtosis()
+print(d1)
